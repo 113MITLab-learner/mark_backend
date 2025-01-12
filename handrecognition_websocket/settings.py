@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-tsho&=2x9m0b!qlm1(k3ws4pk(u*_nv#b&!9$$dtd5ihhgb^@x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'myproject',  # 你的數據庫名稱
         'USER': 'Daniel',      # 你創建的用戶名
         'PASSWORD': '@299792458@',  # 你設定的密碼
-        'HOST': 'localhost',   # MySQL 主機名
-        'PORT': '3306',        # MySQL 預設端口
+        'HOST': '172.20.10.5',        # MySQL 主機名
+        'PORT': '35000',         # MySQL 預設端口
     }
 }
 
@@ -120,12 +120,6 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -139,7 +133,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',  # 修改此處
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],  # Redis 默認地址和端口
+            'hosts': [('172.20.10.5', 36000)],  # Redis 默認地址和端口
         },
     },
 }
@@ -172,3 +166,4 @@ REST_FRAMEWORK = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+ALLOWED_HOSTS = ['127.0.0.1', '172.20.10.5']

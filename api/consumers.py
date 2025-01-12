@@ -31,9 +31,12 @@ class HandRecognitionConsumer(AsyncWebsocketConsumer):
 
         # 加入頻率組以接收頻率更新
         await self.channel_layer.group_add("frequency_group", self.channel_name)
+        await self.channel_layer.group_add("detection_group", self.channel_name)
+        await self.channel_layer.group_add("image_display_group", self.channel_name)
 
         # 啟動背景任務來持續抓取並處理圖像
         self.task = asyncio.create_task(self.send_processed_images())
+        await self.accept()
 
     async def disconnect(self, close_code):
         print(f"WebSocket 已斷開，代碼: {close_code}")  # 調試訊息

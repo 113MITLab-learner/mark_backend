@@ -26,7 +26,7 @@ def toggle_detection(request):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         "detection_group",
-        {"type": "toggle.detection", "is_detection_on": _detection_on}
+        {"type": "toggle_detection", "is_detection_on": _detection_on}
     )
     
     return JsonResponse({"is_detection_on": _detection_on})

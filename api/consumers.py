@@ -8,8 +8,8 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import requests
-from .controllers.image_controller import is_image_display_on  # 假設有這個變數
-from .controllers.detection_controller import is_detection_on  # 假設有這個變數
+from .controllers.image_controller import is_image_display_on  
+from .controllers.detection_controller import is_detection_on  
 from .controllers.frequency_controller import get_current_frequency
 from .controllers.image_processing import fetch_image_from_esp32_cam, process_image_with_mediapipe
 
@@ -36,7 +36,6 @@ class HandRecognitionConsumer(AsyncWebsocketConsumer):
 
         # 啟動背景任務來持續抓取並處理圖像
         self.task = asyncio.create_task(self.send_processed_images())
-        await self.accept()
 
     async def disconnect(self, close_code):
         print(f"WebSocket 已斷開，代碼: {close_code}")  # 調試訊息
@@ -46,6 +45,8 @@ class HandRecognitionConsumer(AsyncWebsocketConsumer):
 
         # 從頻率組中移除
         await self.channel_layer.group_discard("frequency_group", self.channel_name)
+        await self.channel_layer.group_add("detection_group", self.channel_name)
+        await self.channel_layer.group_add("image_display_group", self.channel_name)
 
     async def update_frequency(self, event):
         """

@@ -45,8 +45,8 @@ class HandRecognitionConsumer(AsyncWebsocketConsumer):
 
         # 從頻率組中移除
         await self.channel_layer.group_discard("frequency_group", self.channel_name)
-        await self.channel_layer.group_add("detection_group", self.channel_name)
-        await self.channel_layer.group_add("image_display_group", self.channel_name)
+        await self.channel_layer.group_discard("detection_group", self.channel_name)
+        await self.channel_layer.group_discard("image_display_group", self.channel_name)
 
     async def update_frequency(self, event):
         """

@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'handrecognition_websocket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myproject',  # 你的數據庫名稱
-        'USER': 'Daniel',      # 你創建的用戶名
-        'PASSWORD': '@299792458@',  # 你設定的密碼
-        'HOST': '172.20.10.5',        # MySQL 主機名
-        'PORT': '35000',         # MySQL 預設端口
+        'NAME': os.environ.get('MYSQL_DATABASE', 'myproject'),
+        'USER': os.environ.get('MYSQL_USER', 'Daniel'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', '@299792458@'),
+        'HOST': os.environ.get('MYSQL_HOST', '172.20.10.5'),
+        'PORT': os.environ.get('MYSQL_PORT', '35000'),
     }
 }
 
@@ -133,7 +133,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',  # 修改此處
         'CONFIG': {
-            'hosts': [('172.20.10.5', 36000)],  # Redis 默認地址和端口
+            'hosts': [(os.environ.get('REDIS_HOST', '172.20.10.5'), int(os.environ.get('REDIS_PORT', '6379')))],  # Redis 默認地址和端口
         },
     },
 }
@@ -166,4 +166,3 @@ REST_FRAMEWORK = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-ALLOWED_HOSTS = ['127.0.0.1', '172.20.10.5']

@@ -4,15 +4,17 @@ import requests
 import cv2
 import numpy as np
 import mediapipe as mp
+import os
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
-
-def fetch_image_from_esp32_cam(img_url='http://172.20.10.2/'):
+def fetch_image_from_esp32_cam(img_url=None):
     """
     從 ESP32-CAM 獲取影像。
     """
+    if img_url is None:
+        img_url = os.environ.get('ESP32_CAM_URL', 'http://172.20.10.3/')
     try:
         resp = requests.get(img_url, timeout=5)
         img_arr = np.asarray(bytearray(resp.content), dtype=np.uint8)
